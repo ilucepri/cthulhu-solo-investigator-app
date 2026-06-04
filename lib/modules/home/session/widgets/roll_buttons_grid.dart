@@ -1,12 +1,12 @@
-import 'package:cthulhu_solo_investigator_app/core/models/roll.model.dart';
 import 'package:cthulhu_solo_investigator_app/core/models/roll_type.dart';
 import 'package:cthulhu_solo_investigator_app/core/state/session_controller.dart';
 import 'package:cthulhu_solo_investigator_app/core/theme/app_theme.dart';
 import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/npc_gender_dialog.dart';
 import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/question_dialog.dart';
-import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/roll_preview_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+const int _historyTabIndex = 1;
 
 class RollButtonsGrid extends ConsumerWidget {
   const RollButtonsGrid({super.key});
@@ -27,25 +27,31 @@ class _Button extends ConsumerWidget {
   final RollType rollType;
   const _Button(this.rollType);
 
-  Future<Roll?> _trigger(BuildContext context, WidgetRef ref) async {
+  Future<bool> _trigger(BuildContext context, WidgetRef ref) async {
     final controller = ref.read(sessionControllerProvider.notifier);
     switch (rollType) {
       case RollType.npc:
         final gender = await showNpcGenderDialog(context);
-        if (gender == null) return null;
-        return controller.addNpc(gender);
+        if (gender == null) return false;
+        await controller.addNpc(gender);
+        return true;
       case RollType.verbs:
-        return controller.addVerbs();
+        await controller.addVerbs();
+        return true;
       case RollType.direction:
-        return controller.addDirection();
+        await controller.addDirection();
+        return true;
       case RollType.clue:
-        return controller.addClue();
+        await controller.addClue();
+        return true;
       case RollType.scene:
-        return controller.addScene();
+        await controller.addScene();
+        return true;
       case RollType.question:
         final args = await showQuestionDialog(context);
-        if (args == null) return null;
-        return controller.addQuestion(args.question, args.likelihood);
+        if (args == null) return false;
+        await controller.addQuestion(args.question, args.likelihood);
+        return true;
     }
   }
 
@@ -53,9 +59,9 @@ class _Button extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () async {
-        final roll = await _trigger(context, ref);
-        if (roll != null && context.mounted) {
-          showRollPreviewDialog(context, roll);
+        final added = await _trigger(context, ref);
+        if (added && context.mounted) {
+          DefaultTabController.of(context).animateTo(_historyTabIndex);
         }
       },
       borderRadius: BorderRadius.circular(8),

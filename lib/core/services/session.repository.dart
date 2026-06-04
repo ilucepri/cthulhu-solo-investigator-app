@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SessionRepository {
   static const _rollsKey = 'session.rolls.v1';
   static const _mythsKey = 'session.myths.v1';
+  static const _notesKey = 'session.notes.v1';
 
   Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
@@ -38,9 +39,20 @@ class SessionRepository {
     await sp.setInt(_mythsKey, value);
   }
 
+  Future<String> loadNotes() async {
+    final sp = await _prefs;
+    return sp.getString(_notesKey) ?? '';
+  }
+
+  Future<void> saveNotes(String value) async {
+    final sp = await _prefs;
+    await sp.setString(_notesKey, value);
+  }
+
   Future<void> clear() async {
     final sp = await _prefs;
     await sp.remove(_rollsKey);
     await sp.remove(_mythsKey);
+    await sp.remove(_notesKey);
   }
 }

@@ -38,14 +38,26 @@ class SessionController extends Notifier<SessionState> {
   Future<void> _restore() async {
     final rolls = await _repo.loadRolls();
     final myths = await _repo.loadMythsCounter();
-    state = SessionState(rolls: rolls, mythsCounter: myths, loading: false);
+    final notes = await _repo.loadNotes();
+    state = SessionState(
+      rolls: rolls,
+      mythsCounter: myths,
+      notes: notes,
+      addedSeq: 0,
+      loading: false,
+    );
   }
 
   Future<Roll> _addRoll(Roll roll) async {
     final newRolls = [...state.rolls, roll];
-    state = state.copyWith(rolls: newRolls);
+    state = state.copyWith(rolls: newRolls, addedSeq: state.addedSeq + 1);
     await _repo.saveRolls(newRolls);
     return roll;
+  }
+
+  Future<void> setNotes(String value) async {
+    state = state.copyWith(notes: value);
+    await _repo.saveNotes(value);
   }
 
   Future<Roll> addNpc(String genderSelected) async {
@@ -93,7 +105,7 @@ class SessionController extends Notifier<SessionState> {
   }
 
   Future<void> clearSession() async {
-    state = state.copyWith(rolls: [], mythsCounter: 0);
+    state = state.copyWith(rolls: [], mythsCounter: 0, notes: '');
     await _repo.clear();
   }
 }
