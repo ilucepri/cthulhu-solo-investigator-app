@@ -20,6 +20,30 @@ class CluesRoll {
     required this.linkedClue2,
     required this.paranormalClue,
   });
+
+  Map<String, dynamic> toJson() => {
+        'solo': solo,
+        'tome': tome,
+        'roomItem': roomItem,
+        'weirdClue1': weirdClue1,
+        'weirdClue2': weirdClue2,
+        'weirdClue3': weirdClue3,
+        'linkedClue1': linkedClue1,
+        'linkedClue2': linkedClue2,
+        'paranormalClue': paranormalClue,
+      };
+
+  factory CluesRoll.fromJson(Map<String, dynamic> json) => CluesRoll(
+        solo: json['solo'] as String,
+        tome: json['tome'] as String,
+        roomItem: json['roomItem'] as String,
+        weirdClue1: json['weirdClue1'] as String,
+        weirdClue2: json['weirdClue2'] as String,
+        weirdClue3: json['weirdClue3'] as String,
+        linkedClue1: json['linkedClue1'] as String,
+        linkedClue2: json['linkedClue2'] as String,
+        paranormalClue: json['paranormalClue'] as String,
+      );
 }
 
 class Clues {
@@ -45,14 +69,14 @@ class Clues {
 
   factory Clues.fromJson(List<Map<String, dynamic>> json) {
     return Clues(
-      solo: List<String>.from(json[0]['solo']) ?? [],
-      tome: List<String>.from(json[1]['tome']) ?? [],
-      roomItems: List<String>.from(json[2]['room_items']) ?? [],
-      weirdClues1: List<String>.from(json[3]['weird_clues_1']) ?? [],
-      weirdClues2: List<String>.from(json[4]['weird_clues_2']) ?? [],
-      weirdClues3: List<String>.from(json[5]['weird_clues_3']) ?? [],
-      linkedClues: List<String>.from(json[6]['linked_clues']) ?? [],
-      paranormalClues: List<String>.from(json[7]['paranormal_clues']) ?? [],
+      solo: List<String>.from(json[0]['solo']),
+      tome: List<String>.from(json[1]['tome']),
+      roomItems: List<String>.from(json[2]['room_items']),
+      weirdClues1: List<String>.from(json[3]['weird_clues_1']),
+      weirdClues2: List<String>.from(json[4]['weird_clues_2']),
+      weirdClues3: List<String>.from(json[5]['weird_clues_3']),
+      linkedClues: List<String>.from(json[6]['linked_clues']),
+      paranormalClues: List<String>.from(json[7]['paranormal_clues']),
     );
   }
 }

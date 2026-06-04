@@ -1,61 +1,38 @@
 import 'package:cthulhu_solo_investigator_app/core/models/direction.model.dart';
+import 'package:cthulhu_solo_investigator_app/modules/home/rolls/roll_cards/roll_card_shell.dart';
 import 'package:flutter/material.dart';
 
 class DirectionCard extends StatelessWidget {
   final DirectionRoll directionRoll;
-  DirectionCard(this.directionRoll);
-  late ValueNotifier<int> parentNotifier;
+  const DirectionCard(this.directionRoll, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<String> responsesArray = directionRoll.actionList.map((obj) => obj.response).toList();
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(19, 19, 19, 1),
-        borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(
-          color: Color.fromARGB(255, 255, 212, 21),
-          width: 2,
-        ),
-      ),
-      padding: EdgeInsets.all(14),
+    final responses = directionRoll.actionList.map((o) => o.response).toList();
+    return RollCardShell(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle('Dirección de la historia:'),
-          _buildText(directionRoll.directionType),
-          if (directionRoll.directionTypeInfo != "") ...{
-            _buildText(directionRoll.directionTypeInfo),
-            SizedBox(height: 8),
-          },
-          _buildTitle(directionRoll.directionSubType),
-
-          if(directionRoll.directionSubTypeInfo != "") ...{
-            _buildText(directionRoll.directionSubTypeInfo),
-            SizedBox(height: 8),
-          },
-          if(directionRoll.directionSubSubType != "") ...{
-            _buildText(directionRoll.directionSubSubType),
-          },
-          if (directionRoll.actionList.length >= 1) ... {
-            _buildTitle('Verbos:'),
-            _buildText('${responsesArray.join(', ')}'),
-          }
+          const CardTitle('Dirección de la historia'),
+          CardBody(directionRoll.directionType),
+          if (directionRoll.directionTypeInfo.isNotEmpty) ...[
+            CardBody(directionRoll.directionTypeInfo),
+            const SizedBox(height: 8),
+          ],
+          if (directionRoll.directionSubType.isNotEmpty)
+            CardTitle(directionRoll.directionSubType),
+          if (directionRoll.directionSubTypeInfo.isNotEmpty) ...[
+            CardBody(directionRoll.directionSubTypeInfo),
+            const SizedBox(height: 8),
+          ],
+          if (directionRoll.directionSubSubType.isNotEmpty)
+            CardBody(directionRoll.directionSubSubType),
+          if (directionRoll.actionList.isNotEmpty) ...[
+            const CardTitle('Verbos'),
+            CardBody(responses.join(', ')),
+          ],
         ],
       ),
     );
-  }
-
-  Widget _buildTitle(String title) {
-    return Text(title,
-        style: TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600));
-  }
-
-  Widget _buildText(String text) {
-    return Container(
-        padding: EdgeInsets.only(left: 20),
-        child: Text(text, style: TextStyle(color: Colors.white)));
   }
 }

@@ -1,13 +1,17 @@
-String DIRECTION_TYPE_REST = "Descanso";
-String DIRECTION_TYPE_DEVELOPMENT = "Desarrollo";
-String DIRECTION_TYPE_DISCOVERY = "Descubrimiento";
-String DIRECTION_TYPE_DANGER = "Peligro";
-String DIRECTION_TYPE_EVENT = "Evento";
+abstract class Directions {
+  Directions._();
 
-String DIRECTION_DISTURBANCE_NOTHING = "Nada. -2 a Mitos";
-String DIRECTION_DISTURBANCE_SENSES = "Vision-Dream-Hearing";
-String DIRECTION_DISTURBANCE_EVENT = "Evento";
+  static const String typeRest = 'Descanso';
+  static const String typeDevelopment = 'Desarrollo';
+  static const String typeDiscovery = 'Descubrimiento';
+  static const String typeDanger = 'Peligro';
+  static const String typeEvent = 'Evento';
 
-String DIRECTION_EVENT_HEAR = "Escuchas";
-String DIRECTION_EVENT_SEE = "Ves";
-String DIRECTION_EVENT_EVENTFUL = "Suceso";
+  static const String disturbanceNothing = 'Nada. -2 a Mitos';
+  static const String disturbanceSenses = 'Vision-Dream-Hearing';
+  static const String disturbanceEvent = 'Evento';
+
+  static const String eventHear = 'Escuchas';
+  static const String eventSee = 'Ves';
+  static const String eventEventful = 'Suceso';
+}

@@ -1,62 +1,40 @@
 import 'package:cthulhu_solo_investigator_app/core/models/clues.model.dart';
+import 'package:cthulhu_solo_investigator_app/modules/home/rolls/roll_cards/roll_card_shell.dart';
 import 'package:flutter/material.dart';
 
 class CluesCard extends StatelessWidget {
   final CluesRoll cluesRoll;
-  CluesCard(this.cluesRoll);
-  late ValueNotifier<int> parentNotifier;
+  const CluesCard(this.cluesRoll, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(19, 19, 19, 1),
-        borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(
-          color: Color.fromARGB(255, 255, 212, 21),
-          width: 2,
-        ),
-      ),
-      padding: EdgeInsets.all(14),
+    return RollCardShell(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle('Tomo de mitos:'),
-          _buildText(cluesRoll.tome),
-          SizedBox(height: 8),
-          _buildTitle('Objeto en habitación:'),
-          _buildText(cluesRoll.roomItem),
-          SizedBox(height: 8),
-          _buildTitle('Pista:'),
-          _buildText(cluesRoll.solo),
-          SizedBox(height: 8),
-          _buildTitle('Pistas enlazadas:'),
-          _buildText(cluesRoll.linkedClue1),
-          _buildText(cluesRoll.linkedClue2),
-          SizedBox(height: 8),
-          _buildTitle('Pista rara 1:'),
-          _buildText(cluesRoll.weirdClue1),
-          SizedBox(height: 8),
-          _buildTitle('Pista rara 2:'),
-          _buildText(cluesRoll.weirdClue2),
-          SizedBox(height: 8),
-          _buildTitle('Pista rara 3:'),
-          _buildText(cluesRoll.weirdClue3)
+          const CardTitle('Tomo de mitos'),
+          CardBody(cluesRoll.tome),
+          const SizedBox(height: 8),
+          const CardTitle('Objeto en la habitación'),
+          CardBody(cluesRoll.roomItem),
+          const SizedBox(height: 8),
+          const CardTitle('Pista'),
+          CardBody(cluesRoll.solo),
+          const SizedBox(height: 8),
+          const CardTitle('Pistas enlazadas'),
+          CardBody(cluesRoll.linkedClue1),
+          CardBody(cluesRoll.linkedClue2),
+          const SizedBox(height: 8),
+          const CardTitle('Pista rara I'),
+          CardBody(cluesRoll.weirdClue1),
+          const SizedBox(height: 8),
+          const CardTitle('Pista rara II'),
+          CardBody(cluesRoll.weirdClue2),
+          const SizedBox(height: 8),
+          const CardTitle('Pista rara III'),
+          CardBody(cluesRoll.weirdClue3),
         ],
       ),
     );
-  }
-
-  Widget _buildTitle(String title) {
-    return Text(title,
-        style: TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600));
-  }
-
-  Widget _buildText(String text) {
-    return Container(
-        padding: EdgeInsets.only(left: 20),
-        child: Text(text, style: TextStyle(color: Colors.white)));
   }
 }

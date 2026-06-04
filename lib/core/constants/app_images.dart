@@ -1,1 +1,4 @@
-const String LOGO = "assets/images/logo.svg";
+abstract class AppImages {
+  AppImages._();
+  static const String logo = 'assets/images/logo.svg';
+}

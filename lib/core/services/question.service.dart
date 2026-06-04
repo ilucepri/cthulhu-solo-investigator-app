@@ -7,33 +7,29 @@ class QuestionService {
   final UtilsService _utilsService = UtilsService();
 
   Future<QuestionRoll> getQuestionRoll(String question, String likelihood) async {
-    List<Odds> odds = await getOdds();
-    int roll = _utilsService.getRandomInt(100);
-    Odds oddSelected = odds.where((odd) => odd.title == likelihood).first;
-    roll = roll + oddSelected.odds;
-    QuestionRoll qaRoll = QuestionRoll(question: question, likelihood: likelihood,roll: roll, answer: getAnswer(roll));
-    return qaRoll;
+    final List<Odds> odds = await getOdds();
+    final Odds oddSelected = odds.firstWhere((odd) => odd.title == likelihood);
+    final int roll = _utilsService.getRandomInt(100) + oddSelected.odds;
+    return QuestionRoll(
+      question: question,
+      likelihood: likelihood,
+      roll: roll,
+      answer: getAnswer(roll),
+    );
   }
 
   Future<List<Odds>> getOdds() async {
-    List<dynamic> jsonList = await _jsonService.getObjectList('assets/data_base/odds.json');
-    List<Odds> dataList = [];
-    jsonList.forEach((value) {
-      dataList.add(new Odds.fromJson(value));
-    });
-    return dataList;
+    final List<dynamic> jsonList =
+        await _jsonService.getObjectList('assets/data_base/odds.json');
+    return jsonList.map((value) => Odds.fromJson(value)).toList();
   }
 
   String getAnswer(int roll) {
-    switch (roll) {
-      case (<= 34):
-        return "NO";
-      case (>=35 && <=59):
-        return "QUIZÁS. Tira habilidad para comprobarlo o pregunta mejor. Si sale 2 QUIZÁS seguidos, tira verbos";
-      case (>=60):
-        return "SÍ";
-      default:
-        return "ERROR";
+    if (roll <= 34) return "NO";
+    if (roll <= 59) {
+      return "QUIZÁS. Tira habilidad para comprobarlo o pregunta mejor. "
+          "Si sale 2 QUIZÁS seguidos, tira verbos";
     }
+    return "SÍ";
   }
 }
