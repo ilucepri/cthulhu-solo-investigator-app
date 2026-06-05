@@ -14,15 +14,32 @@ class SessionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loading = ref.watch(sessionControllerProvider.select((s) => s.loading));
-    if (loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppColors.mythos)),
-      );
+    final state = ref.watch(sessionControllerProvider);
+    final active = state.active;
+    if (active == null) {
+      return const Scaffold(body: SizedBox.shrink());
     }
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            tooltip: 'Volver a partidas',
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              await ref.read(sessionControllerProvider.notifier).closeActive();
+              if (context.mounted) Navigator.of(context).pop();
+            },
+          ),
+          title: Text(
+            active.name,
+            overflow: TextOverflow.ellipsis,
+          ),
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(1),
+            child: Divider(height: 1, thickness: 1, color: AppColors.border),
+          ),
+        ),
         body: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(

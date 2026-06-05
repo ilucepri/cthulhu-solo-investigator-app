@@ -58,17 +58,19 @@ class MythsCounterBar extends ConsumerWidget {
             color: AppColors.parchment,
           ),
           IconButton(
-            tooltip: 'Borrar sesión',
-            onPressed: session.isEmpty
-                ? null
-                : () async {
-                    final ok = await showConfirmDialog(
-                      context,
-                      title: 'Borrar sesión',
-                      body: 'Se borrarán todas las tiradas y el contador. ¿Continuar?',
-                    );
-                    if (ok == true) await controller.clearSession();
-                  },
+            tooltip: 'Limpiar partida',
+            onPressed:
+                session.rolls.isEmpty && session.mythsCounter == 0 && session.notes.isEmpty
+                    ? null
+                    : () async {
+                        final ok = await showConfirmDialog(
+                          context,
+                          title: 'Limpiar partida',
+                          body:
+                              'Se borrarán las tiradas, el contador y las notas de esta partida. ¿Continuar?',
+                        );
+                        if (ok == true) await controller.clearActiveContent();
+                      },
             icon: const Icon(Icons.delete_outline),
             color: AppColors.blood,
           ),
