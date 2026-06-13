@@ -1,9 +1,13 @@
 import 'package:cthulhu_solo_investigator_app/core/theme/app_theme.dart';
-import 'package:cthulhu_solo_investigator_app/modules/campaigns/campaigns_page.dart';
+import 'package:cthulhu_solo_investigator_app/firebase_options.dart';
+import 'package:cthulhu_solo_investigator_app/modules/auth/auth_gate.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -15,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cthulhu Solo Investigator',
       theme: AppTheme.dark,
-      home: const CampaignsPage(),
+      home: const AuthGate(),
     );
   }
 }

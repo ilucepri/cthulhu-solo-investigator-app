@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "335189487328",
+    "project_id": "cthulhu-solo-investigator",
+    "storage_bucket": "cthulhu-solo-investigator.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335189487328:android:500393397b7c8abeacea85",
+        "android_client_info": {
+          "package_name": "com.example.cthulhu_solo_investigator_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335189487328-agf7mbqvkh4i9uv0v935lq9v7330p115.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCbKQqn-9cgdnlkPNJ67ylxdqT78ffwmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335189487328-agf7mbqvkh4i9uv0v935lq9v7330p115.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 import 'package:cthulhu_solo_investigator_app/core/models/campaign.dart';
 import 'package:cthulhu_solo_investigator_app/core/state/session_controller.dart';
 import 'package:cthulhu_solo_investigator_app/core/theme/app_theme.dart';
+import 'package:cthulhu_solo_investigator_app/modules/auth/widgets/account_menu.dart';
 import 'package:cthulhu_solo_investigator_app/modules/campaigns/dialogs/name_campaign_dialog.dart';
 import 'package:cthulhu_solo_investigator_app/modules/campaigns/widgets/campaign_tile.dart';
 import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/confirm_dialog.dart';
@@ -17,7 +18,7 @@ class CampaignsPage extends ConsumerWidget {
     final state = ref.watch(sessionControllerProvider);
 
     return Scaffold(
-      appBar: const TopNavigationBarWidget(),
+      appBar: const TopNavigationBarWidget(actions: [AccountMenu()]),
       body: state.loading
           ? const Center(child: CircularProgressIndicator(color: AppColors.mythos))
           : _buildBody(context, ref, state.campaigns),
