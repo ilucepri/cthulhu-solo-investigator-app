@@ -1,6 +1,7 @@
 import 'package:cthulhu_solo_investigator_app/core/state/session_controller.dart';
 import 'package:cthulhu_solo_investigator_app/core/theme/app_theme.dart';
 import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/confirm_dialog.dart';
+import 'package:cthulhu_solo_investigator_app/modules/home/session/dialogs/myths_increase_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,7 @@ class MythsCounterBar extends ConsumerWidget {
 
     return Container(
       margin: const EdgeInsets.only(top: 6),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(6),
@@ -28,19 +29,6 @@ class MythsCounterBar extends ConsumerWidget {
             onPressed: atZero ? null : () => controller.bumpMyths(-1),
             icon: const Icon(Icons.remove_circle_outline),
             color: AppColors.parchment,
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                'CONTADOR DE MITOS · ${session.mythsCounter}',
-                style: const TextStyle(
-                  color: AppColors.mythos,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
           ),
           IconButton(
             tooltip: 'Resetear contador',
@@ -57,22 +45,24 @@ class MythsCounterBar extends ConsumerWidget {
             icon: const Icon(Icons.restart_alt),
             color: AppColors.parchment,
           ),
+          Expanded(
+            child: Center(
+              child: Text(
+                'CONTADOR DE MITOS · ${session.mythsCounter}',
+                style: const TextStyle(
+                  color: AppColors.mythos,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+          ),
           IconButton(
-            tooltip: 'Limpiar partida',
-            onPressed:
-                session.rolls.isEmpty && session.mythsCounter == 0 && session.notes.isEmpty
-                    ? null
-                    : () async {
-                        final ok = await showConfirmDialog(
-                          context,
-                          title: 'Limpiar partida',
-                          body:
-                              'Se borrarán las tiradas, el contador y las notas de esta partida. ¿Continuar?',
-                        );
-                        if (ok == true) await controller.clearActiveContent();
-                      },
-            icon: const Icon(Icons.delete_outline),
-            color: AppColors.blood,
+            tooltip: 'Aumentar mitos',
+            onPressed: () => showMythsIncreaseSheet(context),
+            icon: const Icon(Icons.add_circle_outline),
+            color: AppColors.parchment,
           ),
         ],
       ),
