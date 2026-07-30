@@ -9,12 +9,14 @@ class QuestionService {
   Future<QuestionRoll> getQuestionRoll(String question, String likelihood) async {
     final List<Odds> odds = await getOdds();
     final Odds oddSelected = odds.firstWhere((odd) => odd.title == likelihood);
-    final int roll = _utilsService.getRandomInt(100) + oddSelected.odds;
+    final int roll = _utilsService.getRandomInt(100) + 1;
+    final int target = 50 + oddSelected.odds;
     return QuestionRoll(
       question: question,
       likelihood: likelihood,
       roll: roll,
-      answer: getAnswer(roll),
+      target: target,
+      answer: _answer(roll, target),
     );
   }
 
@@ -24,12 +26,11 @@ class QuestionService {
     return jsonList.map((value) => Odds.fromJson(value)).toList();
   }
 
-  String getAnswer(int roll) {
-    if (roll <= 34) return "NO";
-    if (roll <= 59) {
-      return "QUIZÁS. Tira habilidad para comprobarlo o pregunta mejor. "
-          "Si sale 2 QUIZÁS seguidos, tira verbos";
-    }
-    return "SÍ";
+  String _answer(int roll, int target) {
+    final low = target - 15 < 5 ? 5 : target - 15;
+    if (roll <= low) return 'SÍ';
+    if (roll > target + 15) return 'NO';
+    return 'QUIZÁS. Tira habilidad para comprobarlo o pregunta mejor. '
+        'Si sale 2 QUIZÁS seguidos, tira verbos';
   }
 }

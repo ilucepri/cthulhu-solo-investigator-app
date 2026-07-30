@@ -6,31 +6,28 @@ import 'package:cthulhu_solo_investigator_app/modules/home/session/widgets/roll_
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RollHistoryList extends ConsumerStatefulWidget {
-  const RollHistoryList({super.key});
+class RollFeed extends ConsumerStatefulWidget {
+  const RollFeed({super.key});
 
   @override
-  ConsumerState<RollHistoryList> createState() => _RollHistoryListState();
+  ConsumerState<RollFeed> createState() => _RollFeedState();
 }
 
-class _RollHistoryListState extends ConsumerState<RollHistoryList> {
+class _RollFeedState extends ConsumerState<RollFeed> {
   final ScrollController _scroll = ScrollController();
-  Timer? _highlightTimer;
-  bool _highlightTop = false;
+  String? _newestId;
+  Timer? _clearTimer;
 
   @override
   void dispose() {
-    _highlightTimer?.cancel();
+    _clearTimer?.cancel();
     _scroll.dispose();
     super.dispose();
   }
 
-  void _flashNewest() {
-    setState(() => _highlightTop = true);
-    _highlightTimer?.cancel();
-    _highlightTimer = Timer(const Duration(milliseconds: 2200), () {
-      if (mounted) setState(() => _highlightTop = false);
-    });
+  void _markNewest(String id) {
+    _clearTimer?.cancel();
+    setState(() => _newestId = id);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scroll.hasClients) {
         _scroll.animateTo(
@@ -40,60 +37,47 @@ class _RollHistoryListState extends ConsumerState<RollHistoryList> {
         );
       }
     });
+    _clearTimer = Timer(const Duration(milliseconds: 2400), () {
+      if (mounted) setState(() => _newestId = null);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(sessionControllerProvider.select((s) => s.addedSeq), (_, __) {
-      _flashNewest();
+    ref.listen(sessionControllerProvider.select((s) => s.addedSeq), (prev, next) {
+      if (prev == null || next == prev) return;
+      final rolls = ref.read(sessionControllerProvider).rolls;
+      if (rolls.isNotEmpty) _markNewest(rolls.last.id);
     });
 
     final rolls = ref.watch(sessionControllerProvider.select((s) => s.rolls));
     if (rolls.isEmpty) {
       return const Center(
-        child: Text(
-          'Aún no hay tiradas.\nQue los Antiguos lo permitan.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.parchmentDim, fontSize: 15),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32),
+          child: Text(
+            'Aún no hay tiradas.\nQue los Antiguos lo permitan.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.dim,
+              fontSize: 14.5,
+              height: 1.65,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
         ),
       );
     }
-    return ListView.builder(
+
+    return ListView.separated(
       controller: _scroll,
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.fromLTRB(18, 2, 18, 14),
       itemCount: rolls.length,
-      itemBuilder: (context, i) {
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (_, i) {
         final roll = rolls[rolls.length - 1 - i];
-        final highlight = i == 0 && _highlightTop;
-        return _HighlightWrap(active: highlight, child: RollView(roll));
+        return RollView(roll: roll, justAdded: roll.id == _newestId);
       },
-    );
-  }
-}
-
-class _HighlightWrap extends StatelessWidget {
-  final bool active;
-  final Widget child;
-  const _HighlightWrap({required this.active, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeOut,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: active
-            ? [
-                BoxShadow(
-                  color: AppColors.mythos.withOpacity(0.55),
-                  blurRadius: 18,
-                  spreadRadius: 1,
-                ),
-              ]
-            : const [],
-      ),
-      child: child,
     );
   }
 }

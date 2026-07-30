@@ -58,13 +58,13 @@ class _SocialButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: AppColors.border, width: 1),
-          foregroundColor: AppColors.parchment,
+          side: const BorderSide(color: AppColors.lineStrong, width: 1),
+          foregroundColor: AppColors.text,
           padding: const EdgeInsets.symmetric(vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         onPressed: onPressed,
-        icon: Icon(icon, color: AppColors.mythos),
+        icon: Icon(icon, color: AppColors.accent),
         label: Text(
           label,
           style: const TextStyle(

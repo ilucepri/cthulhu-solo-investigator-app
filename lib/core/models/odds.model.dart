@@ -12,12 +12,14 @@ class QuestionRoll {
   final String question;
   final String likelihood;
   final int roll;
+  final int target;
   final String answer;
 
   QuestionRoll({
     required this.question,
     required this.likelihood,
     required this.roll,
+    required this.target,
     required this.answer,
   });
 
@@ -25,6 +27,7 @@ class QuestionRoll {
         'question': question,
         'likelihood': likelihood,
         'roll': roll,
+        'target': target,
         'answer': answer,
       };
 
@@ -32,6 +35,7 @@ class QuestionRoll {
         question: json['question'] as String,
         likelihood: json['likelihood'] as String,
         roll: json['roll'] as int,
+        target: json['target'] as int? ?? 50,
         answer: json['answer'] as String,
       );
 }

@@ -23,13 +23,13 @@ class WelcomePage extends ConsumerWidget {
                 AppImages.logo,
                 width: 96,
                 height: 96,
-                colorFilter: const ColorFilter.mode(AppColors.mythos, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(AppColors.accent, BlendMode.srcIn),
               ),
               const SizedBox(height: 24),
               const Text(
                 'SOLO INVESTIGATOR',
                 style: TextStyle(
-                  color: AppColors.parchment,
+                  color: AppColors.text,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 3.0,
@@ -40,7 +40,7 @@ class WelcomePage extends ConsumerWidget {
                 'Un manual para investigar en solitario\nlos misterios de los Antiguos.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.parchmentDim,
+                  color: AppColors.muted,
                   fontSize: 15,
                   fontStyle: FontStyle.italic,
                   height: 1.4,
@@ -64,8 +64,8 @@ class WelcomePage extends ConsumerWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: AppColors.border, width: 1),
-                    foregroundColor: AppColors.parchment,
+                    side: const BorderSide(color: AppColors.lineStrong, width: 1),
+                    foregroundColor: AppColors.text,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                   ),
@@ -84,10 +84,10 @@ class WelcomePage extends ConsumerWidget {
                 child: const Text(
                   'Jugar sin cuenta',
                   style: TextStyle(
-                    color: AppColors.parchmentDim,
+                    color: AppColors.muted,
                     fontSize: 14,
                     decoration: TextDecoration.underline,
-                    decorationColor: AppColors.parchmentDim,
+                    decorationColor: AppColors.muted,
                   ),
                 ),
               ),

@@ -7,7 +7,7 @@ class QuestionDialogResult {
   const QuestionDialogResult(this.question, this.likelihood);
 }
 
-const _likelihoods = [
+const List<String> _likelihoods = [
   'Imposible',
   'Improbable',
   'Poco probable',
@@ -18,68 +18,146 @@ const _likelihoods = [
 ];
 
 Future<QuestionDialogResult?> showQuestionDialog(BuildContext context) {
-  return showDialog<QuestionDialogResult>(
+  return showModalBottomSheet<QuestionDialogResult>(
     context: context,
-    builder: (ctx) => const _QuestionDialog(),
+    isScrollControlled: true,
+    backgroundColor: AppColors.surfaceSunken,
+    barrierColor: const Color(0xB806070E),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
+      side: BorderSide(color: AppColors.accent800, width: 1),
+    ),
+    builder: (ctx) => _QuestionSheet(),
   );
 }
 
-class _QuestionDialog extends StatefulWidget {
-  const _QuestionDialog();
-
+class _QuestionSheet extends StatefulWidget {
   @override
-  State<_QuestionDialog> createState() => _QuestionDialogState();
+  State<_QuestionSheet> createState() => _QuestionSheetState();
 }
 
-class _QuestionDialogState extends State<_QuestionDialog> {
-  final TextEditingController _questionInput = TextEditingController();
+class _QuestionSheetState extends State<_QuestionSheet> {
+  final _input = TextEditingController();
   String _selected = 'Posible';
 
   @override
   void dispose() {
-    _questionInput.dispose();
+    _input.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Haz una pregunta'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _questionInput,
-            style: const TextStyle(color: AppColors.parchment),
-            decoration: const InputDecoration(labelText: 'Escribe tu pregunta'),
-          ),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<String>(
-            value: _selected,
-            dropdownColor: AppColors.surfaceRaised,
-            style: const TextStyle(color: AppColors.parchment),
-            onChanged: (v) {
-              if (v != null) setState(() => _selected = v);
-            },
-            items: _likelihoods
-                .map((v) => DropdownMenuItem<String>(value: v, child: Text(v)))
-                .toList(),
-          ),
-        ],
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 200),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('CANCELAR',
-              style: TextStyle(color: AppColors.parchmentDim)),
-        ),
-        ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(
-            QuestionDialogResult(_questionInput.text, _selected),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(18, 18, 18, 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'PREGUNTA AL ORÁCULO',
+                style: TextStyle(
+                  color: AppColors.accent300,
+                  fontSize: 11,
+                  letterSpacing: 2.4,
+                ),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: _input,
+                autofocus: true,
+                style: const TextStyle(color: AppColors.text, fontSize: 15),
+                cursorColor: AppColors.accent,
+                decoration: const InputDecoration(
+                  hintText: '¿Hay alguien vigilando la casa?',
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'PROBABILIDAD',
+                style: TextStyle(
+                  color: AppColors.dim,
+                  fontSize: 10,
+                  letterSpacing: 2.2,
+                ),
+              ),
+              const SizedBox(height: 9),
+              Wrap(
+                spacing: 7,
+                runSpacing: 7,
+                children: _likelihoods
+                    .map((l) => _LikelihoodChip(
+                          label: l,
+                          selected: l == _selected,
+                          onTap: () => setState(() => _selected = l),
+                        ))
+                    .toList(),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_input.text.trim().isEmpty) return;
+                    Navigator.of(context).pop(
+                      QuestionDialogResult(_input.text.trim(), _selected),
+                    );
+                  },
+                  child: const Text('CONSULTAR'),
+                ),
+              ),
+            ],
           ),
-          child: const Text('CONSULTAR'),
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class _LikelihoodChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+  const _LikelihoodChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected ? AppColors.accent.withOpacity(0.16) : Colors.transparent,
+      borderRadius: BorderRadius.circular(999),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(
+              color: selected ? AppColors.accent : AppColors.lineStrong,
+              width: 1,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? AppColors.accent300 : AppColors.muted,
+              fontSize: 12.5,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

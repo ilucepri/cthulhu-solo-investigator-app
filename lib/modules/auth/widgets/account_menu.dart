@@ -17,12 +17,12 @@ class AccountMenu extends ConsumerWidget {
       tooltip: 'Cuenta',
       icon: Icon(
         guest ? Icons.account_circle_outlined : Icons.account_circle,
-        color: AppColors.parchment,
+        color: AppColors.text,
       ),
       color: AppColors.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(6)),
-        side: BorderSide(color: AppColors.border),
+        side: BorderSide(color: AppColors.lineStrong),
       ),
       onSelected: (choice) async {
         final actions = ref.read(authActionsProvider);
@@ -41,7 +41,7 @@ class AccountMenu extends ConsumerWidget {
           child: Text(
             label,
             style: const TextStyle(
-              color: AppColors.parchmentDim,
+              color: AppColors.muted,
               fontSize: 13,
               fontStyle: FontStyle.italic,
             ),
@@ -52,9 +52,9 @@ class AccountMenu extends ConsumerWidget {
           value: _Choice.signOut,
           child: Row(
             children: [
-              Icon(Icons.logout, color: AppColors.parchment),
+              Icon(Icons.logout, color: AppColors.text),
               SizedBox(width: 12),
-              Text('Cerrar sesión', style: TextStyle(color: AppColors.parchment)),
+              Text('Cerrar sesión', style: TextStyle(color: AppColors.text)),
             ],
           ),
         ),

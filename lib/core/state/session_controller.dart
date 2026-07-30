@@ -134,6 +134,11 @@ class SessionController extends Notifier<SessionState> {
     await _repo.saveAll(next);
   }
 
+  ({String id, DateTime createdAt}) _newRollMeta() {
+    final now = DateTime.now();
+    return (id: 'roll-${now.microsecondsSinceEpoch}', createdAt: now);
+  }
+
   Future<Roll> _addRoll(Roll roll) async {
     await _updateActive(
       (c) => c.copyWith(rolls: [...c.rolls, roll]),
@@ -144,38 +149,53 @@ class SessionController extends Notifier<SessionState> {
 
   Future<Roll> addNpc(String genderSelected) async {
     final NPC npc = await ref.read(npcServiceProvider).getNPCRoll(genderSelected);
-    return _addRoll(NpcRoll(npc));
+    final m = _newRollMeta();
+    return _addRoll(NpcRoll(id: m.id, createdAt: m.createdAt, data: npc));
   }
 
   Future<Roll> addVerbs() async {
     final VerbRoll verbs = await ref.read(verbsServiceProvider).getVerbRoll();
-    return _addRoll(VerbsRoll(verbs));
+    final m = _newRollMeta();
+    return _addRoll(VerbsRoll(id: m.id, createdAt: m.createdAt, data: verbs));
   }
 
   Future<Roll> addDirection() async {
     final DirectionRoll d = await ref
         .read(directionServiceProvider)
         .getDirectionRoll(state.mythsCounter);
-    return _addRoll(DirectionRollEntry(d));
+    final m = _newRollMeta();
+    return _addRoll(DirectionRollEntry(id: m.id, createdAt: m.createdAt, data: d));
   }
 
   Future<Roll> addClue() async {
     final CluesRoll c = await ref.read(cluesServiceProvider).getCluesRoll();
-    return _addRoll(CluesRollEntry(c));
+    final m = _newRollMeta();
+    return _addRoll(CluesRollEntry(id: m.id, createdAt: m.createdAt, data: c));
   }
 
   Future<Roll> addScene() async {
     final SceneRoll s = await ref
         .read(sceneServiceProvider)
         .getSceneRoll(state.mythsCounter);
-    return _addRoll(SceneRollEntry(s));
+    final m = _newRollMeta();
+    return _addRoll(SceneRollEntry(id: m.id, createdAt: m.createdAt, data: s));
   }
 
   Future<Roll> addQuestion(String question, String likelihood) async {
     final QuestionRoll q = await ref
         .read(questionServiceProvider)
         .getQuestionRoll(question, likelihood);
-    return _addRoll(QuestionRollEntry(q));
+    final m = _newRollMeta();
+    return _addRoll(QuestionRollEntry(id: m.id, createdAt: m.createdAt, data: q));
+  }
+
+  Future<void> togglePin(String rollId) async {
+    await _updateActive((c) {
+      final next = c.rolls
+          .map((r) => r.id == rollId ? r.copyWith(pinned: !r.pinned) : r)
+          .toList();
+      return c.copyWith(rolls: next);
+    });
   }
 
   Future<void> bumpMyths(int delta) async {

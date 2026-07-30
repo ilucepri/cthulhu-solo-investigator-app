@@ -66,6 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '335189487328',
     projectId: 'cthulhu-solo-investigator',
     storageBucket: 'cthulhu-solo-investigator.firebasestorage.app',
+    androidClientId: '335189487328-c0e2n01fcb1p782lea6v4mim9qi8sic9.apps.googleusercontent.com',
     iosClientId: '335189487328-s183gc3ek45uft4jh3j4s5bvljip6btg.apps.googleusercontent.com',
     iosBundleId: 'com.example.cthulhuSoloInvestigatorHandbook',
   );
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '335189487328',
     projectId: 'cthulhu-solo-investigator',
     storageBucket: 'cthulhu-solo-investigator.firebasestorage.app',
+    androidClientId: '335189487328-c0e2n01fcb1p782lea6v4mim9qi8sic9.apps.googleusercontent.com',
     iosClientId: '335189487328-2a5skdufr0d9njo7teirkla18j2evaoi.apps.googleusercontent.com',
     iosBundleId: 'com.example.cthulhuSoloInvestigatorHandbook.RunnerTests',
   );

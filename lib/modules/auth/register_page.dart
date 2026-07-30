@@ -62,26 +62,26 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 controller: _email,
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
-                style: const TextStyle(color: AppColors.parchment),
+                style: const TextStyle(color: AppColors.text),
                 decoration: const InputDecoration(labelText: 'Email'),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _password,
                 obscureText: true,
-                style: const TextStyle(color: AppColors.parchment),
+                style: const TextStyle(color: AppColors.text),
                 decoration: const InputDecoration(labelText: 'Contraseña'),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _confirm,
                 obscureText: true,
-                style: const TextStyle(color: AppColors.parchment),
+                style: const TextStyle(color: AppColors.text),
                 decoration: const InputDecoration(labelText: 'Repetir contraseña'),
               ),
               const SizedBox(height: 16),
               if (_error != null) ...[
-                Text(_error!, style: const TextStyle(color: AppColors.blood)),
+                Text(_error!, style: const TextStyle(color: AppColors.muted)),
                 const SizedBox(height: 8),
               ],
               ElevatedButton(
@@ -91,7 +91,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                            color: AppColors.parchment, strokeWidth: 2),
+                            color: AppColors.text, strokeWidth: 2),
                       )
                     : const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12),
@@ -101,12 +101,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               const SizedBox(height: 24),
               const Row(
                 children: [
-                  Expanded(child: Divider(color: AppColors.border)),
+                  Expanded(child: Divider(color: AppColors.lineStrong)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: Text('o', style: TextStyle(color: AppColors.parchmentDim)),
+                    child: Text('o', style: TextStyle(color: AppColors.muted)),
                   ),
-                  Expanded(child: Divider(color: AppColors.border)),
+                  Expanded(child: Divider(color: AppColors.lineStrong)),
                 ],
               ),
               const SizedBox(height: 16),

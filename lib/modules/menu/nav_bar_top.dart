@@ -20,7 +20,7 @@ class TopNavigationBarWidget extends StatelessWidget implements PreferredSizeWid
             AppImages.logo,
             width: 22,
             height: 22,
-            colorFilter: const ColorFilter.mode(AppColors.mythos, BlendMode.srcIn),
+            colorFilter: const ColorFilter.mode(AppColors.accent, BlendMode.srcIn),
           ),
           const SizedBox(width: 14),
           const Text('SOLO INVESTIGATOR'),
@@ -29,7 +29,7 @@ class TopNavigationBarWidget extends StatelessWidget implements PreferredSizeWid
       actions: actions,
       bottom: const PreferredSize(
         preferredSize: Size.fromHeight(1),
-        child: Divider(height: 1, thickness: 1, color: AppColors.border),
+        child: Divider(height: 1, thickness: 1, color: AppColors.lineStrong),
       ),
     );
   }

@@ -4,17 +4,25 @@ import 'package:google_fonts/google_fonts.dart';
 class AppColors {
   AppColors._();
 
-  static const Color ink = Color(0xFF0B0F0E);
-  static const Color inkDeep = Color(0xFF050807);
-  static const Color surface = Color(0xFF1A1611);
-  static const Color surfaceRaised = Color(0xFF2B2620);
-  static const Color parchment = Color(0xFFE8DCC3);
-  static const Color parchmentDim = Color(0xFFA99B7B);
-  static const Color border = Color(0xFFA1834A);
-  static const Color primary = Color(0xFF3C5B41);
-  static const Color primaryDim = Color(0xFF2A3F2E);
-  static const Color blood = Color(0xFF6B1F1A);
-  static const Color mythos = Color(0xFFBFA46F);
+  static const Color bg = Color(0xFF161826);
+  static const Color bgDeep = Color(0xFF0D0E17);
+  static const Color surface = Color(0xFF232532);
+  static const Color surfaceSunken = Color(0xFF1C1E2B);
+  static const Color surfaceHover = Color(0xFF242636);
+  static const Color line = Color(0xFF2F313E);
+  static const Color lineSoft = Color(0xFF262836);
+  static const Color lineStrong = Color(0xFF3F424D);
+  static const Color text = Color(0xFFE9E9ED);
+  static const Color textSoft = Color(0xFFCFD3E5);
+  static const Color muted = Color(0xFF9397AB);
+  static const Color dim = Color(0xFF75798C);
+  static const Color faint = Color(0xFF595D6C);
+  static const Color accent = Color(0xFF9184D9);
+  static const Color accent300 = Color(0xFFD2CEFD);
+  static const Color accent400 = Color(0xFFB5ABFC);
+  static const Color accent700 = Color(0xFF5D5294);
+  static const Color accent800 = Color(0xFF423A6A);
+  static const Color accent900 = Color(0xFF2B2741);
 }
 
 class AppTheme {
@@ -22,128 +30,101 @@ class AppTheme {
 
   static ThemeData get dark {
     final base = ThemeData.dark(useMaterial3: true);
-    final textTheme = GoogleFonts.crimsonTextTextTheme(base.textTheme).apply(
-      bodyColor: AppColors.parchment,
-      displayColor: AppColors.parchment,
+    final textTheme = GoogleFonts.interTextTheme(base.textTheme).apply(
+      bodyColor: AppColors.text,
+      displayColor: AppColors.text,
     );
 
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.ink,
+      scaffoldBackgroundColor: AppColors.bg,
       colorScheme: const ColorScheme.dark(
         surface: AppColors.surface,
-        primary: AppColors.primary,
-        secondary: AppColors.mythos,
-        error: AppColors.blood,
-        onPrimary: AppColors.parchment,
-        onSurface: AppColors.parchment,
-        onError: AppColors.parchment,
+        primary: AppColors.accent,
+        secondary: AppColors.accent400,
+        error: AppColors.muted,
+        onPrimary: AppColors.text,
+        onSurface: AppColors.text,
+        onError: AppColors.text,
       ),
-      textTheme: textTheme.copyWith(
-        titleLarge: GoogleFonts.cinzel(
-          textStyle: textTheme.titleLarge,
-          color: AppColors.parchment,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.2,
-        ),
-        titleMedium: GoogleFonts.cinzel(
-          textStyle: textTheme.titleMedium,
-          color: AppColors.parchment,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.8,
-        ),
-        labelLarge: GoogleFonts.cinzel(
-          textStyle: textTheme.labelLarge,
-          color: AppColors.parchment,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.0,
-        ),
-      ),
+      textTheme: textTheme,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.inkDeep,
-        surfaceTintColor: AppColors.inkDeep,
-        foregroundColor: AppColors.parchment,
+        backgroundColor: AppColors.bg,
+        surfaceTintColor: AppColors.bg,
+        foregroundColor: AppColors.text,
         elevation: 0,
-        titleTextStyle: GoogleFonts.cinzel(
-          color: AppColors.parchment,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 2.0,
+        titleTextStyle: GoogleFonts.inter(
+          color: AppColors.text,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          letterSpacing: -0.1,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.parchment,
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+          backgroundColor: Colors.transparent,
+          foregroundColor: AppColors.accent300,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-            side: const BorderSide(color: AppColors.border, width: 1),
+            borderRadius: BorderRadius.circular(8),
+            side: const BorderSide(color: AppColors.accent, width: 1),
           ),
-          textStyle: GoogleFonts.cinzel(
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.0,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          textStyle: GoogleFonts.inter(
+            fontSize: 12.5,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 2.2,
           ),
         ),
       ),
-      iconTheme: const IconThemeData(color: AppColors.parchmentDim),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.parchment,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.muted,
+          textStyle: GoogleFonts.inter(fontSize: 12.5, letterSpacing: 1.4),
+        ),
       ),
+      iconTheme: const IconThemeData(color: AppColors.textSoft),
       dialogTheme: DialogTheme(
-        backgroundColor: AppColors.surface,
-        surfaceTintColor: AppColors.surface,
+        backgroundColor: AppColors.surfaceSunken,
+        surfaceTintColor: AppColors.surfaceSunken,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: AppColors.border, width: 1),
-          borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: AppColors.accent800, width: 1),
+          borderRadius: BorderRadius.circular(14),
         ),
-        titleTextStyle: GoogleFonts.cinzel(
-          color: AppColors.parchment,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.2,
-        ),
-        contentTextStyle: GoogleFonts.crimsonText(
-          color: AppColors.parchment,
+        titleTextStyle: GoogleFonts.inter(
+          color: AppColors.text,
           fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        contentTextStyle: GoogleFonts.inter(
+          color: AppColors.muted,
+          fontSize: 13.5,
+          height: 1.45,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceRaised,
-        labelStyle: const TextStyle(color: AppColors.parchmentDim),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        fillColor: AppColors.surface,
+        labelStyle: const TextStyle(color: AppColors.muted),
+        hintStyle: const TextStyle(color: AppColors.dim),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.lineStrong),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.lineStrong),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: const BorderSide(color: AppColors.mythos, width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.accent, width: 1.5),
         ),
       ),
-      tabBarTheme: TabBarTheme(
-        labelColor: AppColors.mythos,
-        unselectedLabelColor: AppColors.parchmentDim,
-        indicatorColor: AppColors.mythos,
-        dividerColor: Colors.transparent,
-        labelStyle: GoogleFonts.cinzel(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.2,
-        ),
-        unselectedLabelStyle: GoogleFonts.cinzel(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 1.0,
-        ),
-        overlayColor: WidgetStateProperty.all(Colors.transparent),
-      ),
-      dividerColor: AppColors.border,
+      dividerColor: AppColors.line,
+      splashFactory: InkRipple.splashFactory,
+      splashColor: AppColors.accent.withOpacity(0.10),
+      highlightColor: AppColors.accent.withOpacity(0.08),
     );
   }
 }

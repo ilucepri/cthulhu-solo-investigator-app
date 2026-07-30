@@ -20,7 +20,7 @@ class MythsCounterBar extends ConsumerWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: AppColors.border, width: 1),
+        border: Border.all(color: AppColors.lineStrong, width: 1),
       ),
       child: Row(
         children: [
@@ -28,7 +28,7 @@ class MythsCounterBar extends ConsumerWidget {
             tooltip: 'Restar 1',
             onPressed: atZero ? null : () => controller.bumpMyths(-1),
             icon: const Icon(Icons.remove_circle_outline),
-            color: AppColors.parchment,
+            color: AppColors.text,
           ),
           IconButton(
             tooltip: 'Resetear contador',
@@ -43,14 +43,14 @@ class MythsCounterBar extends ConsumerWidget {
                     if (ok == true) await controller.resetMyths();
                   },
             icon: const Icon(Icons.restart_alt),
-            color: AppColors.parchment,
+            color: AppColors.text,
           ),
           Expanded(
             child: Center(
               child: Text(
                 'CONTADOR DE MITOS · ${session.mythsCounter}',
                 style: const TextStyle(
-                  color: AppColors.mythos,
+                  color: AppColors.accent,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.2,
@@ -62,7 +62,7 @@ class MythsCounterBar extends ConsumerWidget {
             tooltip: 'Aumentar mitos',
             onPressed: () => showMythsIncreaseSheet(context),
             icon: const Icon(Icons.add_circle_outline),
-            color: AppColors.parchment,
+            color: AppColors.text,
           ),
         ],
       ),

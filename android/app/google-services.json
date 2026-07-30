@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "335189487328-c0e2n01fcb1p782lea6v4mim9qi8sic9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cthulhu_solo_investigator_app",
+            "certificate_hash": "f9d22f5cba1b1aa1b91b4865010fbe91468df59f"
+          }
+        },
+        {
           "client_id": "335189487328-agf7mbqvkh4i9uv0v935lq9v7330p115.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "335189487328-agf7mbqvkh4i9uv0v935lq9v7330p115.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "335189487328-2a5skdufr0d9njo7teirkla18j2evaoi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cthulhuSoloInvestigatorHandbook.RunnerTests"
+              }
             }
           ]
         }
